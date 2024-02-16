@@ -1,0 +1,30 @@
+pipeline {
+  agent any
+  options {
+    buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')
+    disableConcurrentBuilds()
+  }
+  stages {
+    stage ('Build (phkbzp)') {
+      steps {
+        sh script: 'mvn clean ', label: 'dwtu5j'
+        sh script: 'mvn test ', label: 'of2xe4'
+        sh script: 'mvn install -Dmaven.test.skip=true', label: 'rs0v11'
+        script {
+		docker.withTool('docker'){
+
+        
+            sh script: '''
+docker build -t artifactory.dagility.com/docker/vdchtm-backend:latest .
+''', label: 'dcbcae'
+            sh script: '''
+docker push artifactory.dagility.com/docker/vdchtm-backend:latest
+''', label: 'bdaeef'
+        		}
+	}
+script { sh script: 'sleep 0.005', label: 'fmw4o7'}
+
+      } //end steps
+    } // end stage Build
+  }
+}
