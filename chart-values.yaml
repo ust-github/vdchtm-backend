@@ -1,0 +1,14 @@
+image:
+  repository: artifactory.dagility.com/docker/vdchtm-backend
+  tag: latest
+  pullPolicy: Always
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx-internal
+  hosts:
+  - host: vdchtm-backend-habitat-test3.dagility.com
+    paths:
+    - /
+serviceAccount:
+  create: false

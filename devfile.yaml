@@ -1,0 +1,14 @@
+apiVersion: 1.0.0
+components:
+  - id: redhat/java8/latest
+    type: chePlugin
+    preferences:
+      java.jdt.ls.vmargs: '-javaagent:/home/user/lombok-1.18.16.jar'
+commands:
+  - name: connect java debugger backend
+    actions:
+      - referenceContent: >-
+          {"version": "0.2.0", "configurations": [{"type": "java", "name":
+          "Application Debug", "request" : "launch", "mainClass" :
+          "com.example.demo.Application", "projectName" : "demo"}]}
+        type: vscode-launch
