@@ -1,0 +1,25 @@
+pipeline {
+  agent any
+  stages {
+    stage ('Deploy (udkjn6)') {
+      steps {
+        sh script: '''
+ln -sf /usr/local/bin/helm3 /usr/local/bin/helm
+''', label: 'gr88gx'
+        sh script: 'helm package chart', label: 'ijhrf0'
+        withCredentials([usernamePassword(credentialsId: '', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+
+        script {
+            sh script: '''
+curl -u$USER:$PASS -T vdchtm-backend-chart-0.1.0.tgz 'https://artifactory.dagility.com/artifactory/helm-local/vdchtm-backend-chart-0.1.0.tgz' 
+''', label: 'bdaccc'
+        } // end step group script
+script { sh script: 'sleep 0.005', label: '4j2evm'}
+} // end step group
+        sh script: 'helm repo add vdchtm-backend https://artifactory.dagility.com/artifactory/helm ', label: 'rvsu01'
+        sh script: 'helm repo update', label: 'mesfnb'
+        sh script: 'helm upgrade vdchtm-backend-deployment vdchtm-backend/vdchtm-backend-chart --install --values chart-values.yaml --namespace habitat-test3 --set ingress.hosts[0].host=vdchtm-backend-habitat-test3.dagility.com', label: 'ixxrui'
+      } //end steps
+    } // end stage Deploy
+  }
+}
